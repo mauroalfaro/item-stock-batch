@@ -1,13 +1,16 @@
 package com.alfarosoft.itemstockbatch.processor;
 
 import com.alfarosoft.itemstockbatch.model.MerchandiseHierarchy;
-import com.alfarosoft.itemstockbatch.model.composites.ItemComposite;
 import com.alfarosoft.itemstockbatch.model.composites.MerchandiseHierarchyComposite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 import java.util.Date;
 
 public class MerchandiseHierarchyCompositeProcessor implements ItemProcessor<MerchandiseHierarchy, MerchandiseHierarchyComposite> {
+    private static final Logger log = LoggerFactory.getLogger(MerchandiseHierarchyCompositeProcessor.class);
+
     @Override
     public MerchandiseHierarchyComposite process(MerchandiseHierarchy merchandiseHierarchy) throws Exception {
         String division = merchandiseHierarchy.getDivision();
