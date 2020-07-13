@@ -1,12 +1,34 @@
 package com.alfarosoft.itemstockbatch.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "MerchandiseHierarchy")
 public class MerchandiseHierarchy {
+
+    @JsonProperty("division")
+    @Column(name = "division")
     private String division;
+
+    @JsonProperty("group")
+    @Column(name = "group")
     private String group;
+
+    @JsonProperty("department")
+    @Column(name = "department")
     private String department;
+
+    @JsonProperty("class")
+    @Column(name = "class")
     private String merchandiseClass;
+
+    @JsonProperty("category")
+    @Column(name = "category")
     private String category;
 
     public MerchandiseHierarchy(String division, String group, String department, String merchandiseClass, String category) {

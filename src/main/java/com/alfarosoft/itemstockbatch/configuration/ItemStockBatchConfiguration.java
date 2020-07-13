@@ -65,7 +65,7 @@ public class ItemStockBatchConfiguration {
                 .name("itemItemReader")
                 .resource(new ClassPathResource("item.csv"))
                 .delimited()
-                .names(new String[]{"sku", "name", "description", "longDescription", "category", "price", "authorizedForSale"})
+                .names(new String[]{"SKU", "Name", "Description", "LongDescription", "Category", "Price", "AuthorizedForSale"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Item>() {{
                     setTargetType(Item.class);
                 }})
@@ -78,7 +78,7 @@ public class ItemStockBatchConfiguration {
                 .name("merchandiseHierarchyItemReader")
                 .resource(new ClassPathResource("merchandiseHierarchy.csv"))
                 .delimited()
-                .names(new String[]{"divison", "group", "department", "merchandiseClass", "category"})
+                .names(new String[]{"Division", "Group", "Department", "Class", "Category"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<MerchandiseHierarchy>() {{
                     setTargetType(MerchandiseHierarchy.class);
                 }})
@@ -125,7 +125,7 @@ public class ItemStockBatchConfiguration {
 
     @Bean
     public Job importMerchandiseJob(MerchandiseHierarchyJobListener listener, Step merchandiseHierarchyCompositeStep) {
-        return jobBuilderFactory.get("importItemJob")
+        return jobBuilderFactory.get("importMerchandiseJob")
                 .incrementer(new RunIdIncrementer())
                 .listener(listener)
                 .flow(merchandiseHierarchyCompositeStep)
