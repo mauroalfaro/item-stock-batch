@@ -11,6 +11,8 @@ import com.alfarosoft.itemstockbatch.processor.ItemCompositeProcessor;
 import com.alfarosoft.itemstockbatch.processor.MerchandiseHierarchyCompositeProcessor;
 import com.alfarosoft.itemstockbatch.service.ItemRetrieveService;
 import com.alfarosoft.itemstockbatch.service.MerchandiseHierarchyRetrieveService;
+import com.alfarosoft.itemstockbatch.writer.ItemCompositeWriter;
+import com.alfarosoft.itemstockbatch.writer.MerchandiseHierarchyCompositeWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -96,24 +98,6 @@ public class ItemStockBatchConfiguration {
     }
 
     @Bean
-    public JdbcBatchItemWriter<ItemComposite> itemCompositeJdbcBatchItemWriter(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<ItemComposite>()
-                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO Item (sku, name, description, longDescription, category, price, authorizedForSale, dateImported) VALUES (:sku, :name, :description, :longDescription, :category, :price, :authorizedForSale, :dateImported)")
-                .dataSource(dataSource)
-                .build();
-    }
-
-    @Bean
-    public JdbcBatchItemWriter<MerchandiseHierarchyComposite> merchandiseHierarchyCompositeJdbcBatchItemWriter(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<MerchandiseHierarchyComposite>()
-                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                .sql("INSERT INTO MerchandiseHierarchy (division, group, department, category, class, dateImported) VALUES (:division, :group, :department, :category, :merchandiseClass, :dateImported)")
-                .dataSource(dataSource)
-                .build();
-    }
-
-    @Bean
     public Job importItemJob(ItemJobListener listener, Step itemCompositeStep) {
         return jobBuilderFactory.get("importItemJob")
                 .incrementer(new RunIdIncrementer())
@@ -133,9 +117,20 @@ public class ItemStockBatchConfiguration {
                 .build();
     }
 
+    @Bean
+    @RequestScope
+    public ItemCompositeWriter itemCompositeWriter() throws Exception {
+        return new ItemCompositeWriter(hibernateSessionFactory());
+    }
 
     @Bean
-    public Step itemCompositeStep(JdbcBatchItemWriter<ItemComposite> writer) {
+    @RequestScope
+    public MerchandiseHierarchyCompositeWriter merchandiseHierarchyCompositeWriter() throws Exception {
+        return new MerchandiseHierarchyCompositeWriter(hibernateSessionFactory());
+    }
+
+    @Bean
+    public Step itemCompositeStep(ItemCompositeWriter writer) {
         return stepBuilderFactory.get("itemCompositeStep")
                 .<Item, ItemComposite> chunk(10)
                 .reader(itemReader())
@@ -145,7 +140,7 @@ public class ItemStockBatchConfiguration {
     }
 
     @Bean
-    public Step merchandiseHierarchyCompositeStep(JdbcBatchItemWriter<MerchandiseHierarchyComposite> writer) {
+    public Step merchandiseHierarchyCompositeStep(MerchandiseHierarchyCompositeWriter writer) {
         return stepBuilderFactory.get("merchandiseHierarchyCompositeStep")
                 .<MerchandiseHierarchy, MerchandiseHierarchyComposite> chunk(10)
                 .reader(merchandiseHierarchyReader())

@@ -1,7 +1,6 @@
 package com.alfarosoft.itemstockbatch.service;
 
 import com.alfarosoft.itemstockbatch.database.HibernateSessionFactory;
-import com.alfarosoft.itemstockbatch.model.Item;
 import com.alfarosoft.itemstockbatch.model.MerchandiseHierarchy;
 import org.hibernate.Session;
 import org.slf4j.Logger;
