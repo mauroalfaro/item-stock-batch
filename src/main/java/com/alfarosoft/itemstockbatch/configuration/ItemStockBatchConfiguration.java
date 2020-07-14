@@ -44,19 +44,16 @@ public class ItemStockBatchConfiguration {
     public StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    @RequestScope
     public ItemRetrieveService itemRetrieveService() throws Exception {
         return new ItemRetrieveService(hibernateSessionFactory());
     }
 
     @Bean
-    @RequestScope
     public MerchandiseHierarchyRetrieveService merchandiseHierarchyRetrieveService() throws Exception {
         return new MerchandiseHierarchyRetrieveService(hibernateSessionFactory());
     }
 
     @Bean
-    @RequestScope
     public HibernateSessionFactory hibernateSessionFactory(){
         return new HibernateSessionFactory();
     }
@@ -67,7 +64,7 @@ public class ItemStockBatchConfiguration {
                 .name("itemItemReader")
                 .resource(new ClassPathResource("item.csv"))
                 .delimited()
-                .names(new String[]{"SKU", "Name", "Description", "LongDescription", "Category", "Price", "AuthorizedForSale"})
+                .names(new String[]{"sku", "name", "description", "longDescription", "category", "price", "authorizedForSale"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<Item>() {{
                     setTargetType(Item.class);
                 }})
@@ -80,7 +77,7 @@ public class ItemStockBatchConfiguration {
                 .name("merchandiseHierarchyItemReader")
                 .resource(new ClassPathResource("merchandiseHierarchy.csv"))
                 .delimited()
-                .names(new String[]{"Division", "Group", "Department", "Class", "Category"})
+                .names(new String[]{"division", "merchandiseGroup", "department", "merchandiseClass", "category"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<MerchandiseHierarchy>() {{
                     setTargetType(MerchandiseHierarchy.class);
                 }})
@@ -98,33 +95,31 @@ public class ItemStockBatchConfiguration {
     }
 
     @Bean
-    public Job importItemJob(ItemJobListener listener, Step itemCompositeStep) {
+    public Job importItemJob(ItemJobListener itemJobListener, Step itemCompositeStep) {
         return jobBuilderFactory.get("importItemJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener)
+                .listener(itemJobListener)
                 .flow(itemCompositeStep)
                 .end()
                 .build();
     }
 
     @Bean
-    public Job importMerchandiseJob(MerchandiseHierarchyJobListener listener, Step merchandiseHierarchyCompositeStep) {
+    public Job importMerchandiseJob(MerchandiseHierarchyJobListener merchandiseHierarchyJobListener, Step merchandiseHierarchyCompositeStep) {
         return jobBuilderFactory.get("importMerchandiseJob")
                 .incrementer(new RunIdIncrementer())
-                .listener(listener)
+                .listener(merchandiseHierarchyJobListener)
                 .flow(merchandiseHierarchyCompositeStep)
                 .end()
                 .build();
     }
 
     @Bean
-    @RequestScope
     public ItemCompositeWriter itemCompositeWriter() throws Exception {
         return new ItemCompositeWriter(hibernateSessionFactory());
     }
 
     @Bean
-    @RequestScope
     public MerchandiseHierarchyCompositeWriter merchandiseHierarchyCompositeWriter() throws Exception {
         return new MerchandiseHierarchyCompositeWriter(hibernateSessionFactory());
     }

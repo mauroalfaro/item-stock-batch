@@ -1,18 +1,55 @@
 package com.alfarosoft.itemstockbatch.model.composites;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Item")
 public class ItemComposite {
+    @JsonProperty("sku")
+    @Id
+    @Column(name = "sku")
     private Integer sku;
+
+    @JsonProperty("name")
+    @Column(name = "name")
     private String name;
+
+    @JsonProperty("description")
+    @Column(name = "description")
     private String description;
+
+    @JsonProperty("longDescription")
+    @Column(name = "longDescription")
     private String longDescription;
+
+    @JsonProperty("category")
+    @Column(name = "category")
     private String category;
+
+    @JsonProperty("price")
+    @Column(name = "price")
     private Integer price;
+
+
+    @JsonProperty("authorizedForSale")
+    @Column(name = "authorizedForSale")
     private String authorizedForSale;
+
+
+    @JsonProperty("dateImported")
+    @Column(name = "dateImported")
     private LocalDate dateImported;
+
+    public ItemComposite(){
+    }
 
     public ItemComposite(Integer sku, String name, String description, String longDescription, String category, Integer price, String authorizedForSale, LocalDate dateImported) {
         this.sku = sku;

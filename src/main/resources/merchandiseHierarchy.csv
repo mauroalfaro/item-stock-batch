@@ -1,6 +1,1 @@
-Division,Group,Department,Class,Category
-100|Dockers Accessories
-100|Dockers Accessories,101|Outerwear,102|SomeDepartment
-100|Dockers Accessories,101|Outerwear,102|SomeDepartment,103|SomeClass
-100|Dockers Accessories,101|Outerwear,102|SomeDepartment,103|SomeClass,104|SomeCategory
-
+Dockers,Outerwear,SomeDepartment,SomeClass,SomeCategory

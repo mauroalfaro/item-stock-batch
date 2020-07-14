@@ -1,16 +1,45 @@
 package com.alfarosoft.itemstockbatch.model.composites;
 
+import com.alfarosoft.itemstockbatch.model.MerchandiseHierarchy;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "MerchandiseHierarchy")
 public class MerchandiseHierarchyComposite {
+    @JsonProperty("division")
+    @Id
+    @Column(name = "division")
     private String division;
+
+    @JsonProperty("merchandiseGroup")
+    @Column(name = "merchandiseGroup")
     private String group;
+
+    @JsonProperty("department")
+    @Column(name = "department")
     private String department;
+
+    @JsonProperty("merchandiseClass")
+    @Column(name = "merchandiseClass")
     private String merchandiseClass;
+
+    @JsonProperty("category")
+    @Column(name = "category")
     private String category;
+
+    @JsonProperty("dateImported")
+    @Column(name = "dateImported")
     private LocalDate dateImported;
+
+    public MerchandiseHierarchyComposite(){
+    }
 
     public MerchandiseHierarchyComposite(String division, String group, String department, String merchandiseClass, String category, LocalDate dateImported) {
         this.division = division;

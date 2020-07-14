@@ -2,6 +2,8 @@ package com.alfarosoft.itemstockbatch.controller;
 
 import com.alfarosoft.itemstockbatch.model.Item;
 import com.alfarosoft.itemstockbatch.model.MerchandiseHierarchy;
+import com.alfarosoft.itemstockbatch.model.composites.ItemComposite;
+import com.alfarosoft.itemstockbatch.model.composites.MerchandiseHierarchyComposite;
 import com.alfarosoft.itemstockbatch.service.ItemRetrieveService;
 import com.alfarosoft.itemstockbatch.service.MerchandiseHierarchyRetrieveService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +48,7 @@ public class RetrieveDataController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)})
     @GetMapping(value = "/items", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Item>> searchItems(){
+    public ResponseEntity<List<ItemComposite>> searchItems(){
         LOG.info("Incoming items search request from RetrieveDataController");
         return ResponseEntity.status(HttpStatus.OK).body(itemRetrieveService.retrieveItems());
     }
@@ -61,7 +63,7 @@ public class RetrieveDataController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)})
     @GetMapping(value = "/merchandise", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MerchandiseHierarchy>> searchMerchandiseHierarchy(){
+    public ResponseEntity<List<MerchandiseHierarchyComposite>> searchMerchandiseHierarchy(){
         LOG.info("Incoming merchandise search request from RetrieveDataController");
         return ResponseEntity.status(HttpStatus.OK).body(merchandiseHierarchyRetrieveService.retrieveMerchandiseHierarchy());
     }

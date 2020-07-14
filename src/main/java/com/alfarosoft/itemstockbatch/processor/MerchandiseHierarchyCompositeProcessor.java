@@ -13,12 +13,12 @@ public class MerchandiseHierarchyCompositeProcessor implements ItemProcessor<Mer
     @Override
     public MerchandiseHierarchyComposite process(MerchandiseHierarchy merchandiseHierarchy) throws Exception {
         String division = merchandiseHierarchy.getDivision();
-        String group = merchandiseHierarchy.getGroup();
+        String merchandiseGroup = merchandiseHierarchy.getMerchandiseGroup();
         String department = merchandiseHierarchy.getDepartment();
         String merchandiseClass = merchandiseHierarchy.getMerchandiseClass();
         String category = merchandiseHierarchy.getCategory();
 
-        MerchandiseHierarchyComposite merchandiseHierarchyComposite = new MerchandiseHierarchyComposite(division, group, department, merchandiseClass, category, java.time.LocalDate.now());
+        MerchandiseHierarchyComposite merchandiseHierarchyComposite = new MerchandiseHierarchyComposite(division, merchandiseGroup, department, merchandiseClass, category, java.time.LocalDate.now());
 
         return merchandiseHierarchyComposite;
     }

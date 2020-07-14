@@ -22,8 +22,8 @@
         <property name="entitymanager.packagesToScan">com</property>
 
         <!-- Mapping entities -->
-        <mapping class="com.alfarosoft.itemstockbatch.model.Item"/>
-        <mapping class="com.alfarosoft.itemstockbatch.model.MerchandiseHierarchy"/>
+        <mapping class="com.alfarosoft.itemstockbatch.model.composites.ItemComposite"/>
+        <mapping class="com.alfarosoft.itemstockbatch.model.composites.MerchandiseHierarchyComposite"/>
 
     </session-factory>
 </hibernate-configuration>

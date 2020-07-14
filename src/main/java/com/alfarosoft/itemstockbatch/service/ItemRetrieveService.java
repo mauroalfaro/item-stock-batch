@@ -2,6 +2,7 @@ package com.alfarosoft.itemstockbatch.service;
 
 import com.alfarosoft.itemstockbatch.database.HibernateSessionFactory;
 import com.alfarosoft.itemstockbatch.model.Item;
+import com.alfarosoft.itemstockbatch.model.composites.ItemComposite;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,11 @@ public class ItemRetrieveService {
         this.itemSession = hibernateSessionFactory.buildSession();
     }
 
-    public List<Item> retrieveItems(){
+    public List<ItemComposite> retrieveItems(){
         itemSession.beginTransaction();
-        List<Item> items = itemSession.createQuery("from Item", Item.class).list();
+        List<ItemComposite> itemComposites = itemSession.createQuery("from ItemComposite", ItemComposite.class).list();
         itemSession.getTransaction().commit();
         LOG.info("Items imported returned");
-        return items;
+        return itemComposites;
     }
 }
