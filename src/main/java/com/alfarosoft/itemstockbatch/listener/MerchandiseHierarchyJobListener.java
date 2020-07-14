@@ -23,7 +23,7 @@ public class MerchandiseHierarchyJobListener extends JobExecutionListenerSupport
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("Merchandise hierarchy import job finished successfully");
-            log.info("Merchandise hierarchies imported: ",merchandiseHierarchyRetrieveService.retrieveMerchandiseHierarchy());
+            log.info("Merchandise hierarchies imported: {}",merchandiseHierarchyRetrieveService.retrieveMerchandiseHierarchy());
         }
         else {
             log.error("Merchandise hierarchy import incomplete with status: " + jobExecution.getStatus().name());

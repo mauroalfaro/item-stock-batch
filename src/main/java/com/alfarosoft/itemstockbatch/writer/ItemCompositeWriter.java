@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class ItemCompositeWriter implements ItemWriter<ItemComposite> {
@@ -22,11 +23,21 @@ public class ItemCompositeWriter implements ItemWriter<ItemComposite> {
 
     @Override
     public void write(List<? extends ItemComposite> list) throws Exception {
+        LOG.info("Cleaning previous Items from db");
+        wipeDbData();
         LOG.info("Writing Items to database");
         for(ItemComposite itemComposite : list){
             itemSession.beginTransaction();
             itemSession.save(itemComposite);
             itemSession.getTransaction().commit();
         }
+    }
+
+    private void wipeDbData(){
+        itemSession.beginTransaction();
+        String stringQuery = "DELETE FROM ItemComposite";
+        Query query = itemSession.createQuery(stringQuery);
+        query.executeUpdate();
+        itemSession.getTransaction().commit();
     }
 }

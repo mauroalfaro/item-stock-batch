@@ -24,7 +24,7 @@ public class ItemJobListener extends JobExecutionListenerSupport {
     public void afterJob(JobExecution jobExecution) {
         if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
             log.info("Items import job finished successfully");
-            log.info("Items imported: ",itemRetrieveService.retrieveItems());
+            log.info("Items imported: {}",itemRetrieveService.retrieveItems());
         }
         else {
             log.error("Items import incomplete with status: " + jobExecution.getStatus().name());
