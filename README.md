@@ -1,4 +1,5 @@
 # item-stock-batch
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/mauroalfaro/item-stock-batch)](https://github.com/mauroalfaro/item-stock-batch/releases/tag/v1.0)
 
 ## Description
 Basic Spring Batch application. Imports items and merchandise hierarchy csv files to a database running on a Docker container.
