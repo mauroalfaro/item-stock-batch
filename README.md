@@ -38,5 +38,5 @@ java -jar item-stock-batch/target/item-stock-batch-1.0-RELEASE.jar
 
 - Starting the app will trigger the import job of the csv files located on the resources directory. Modifiy these files with the desired data that you want to import.
 - If any other instance of the import job was executed before, any new import run will wipe the data present on the db before writing new data.
-- Use the /importedData/items and /importedData/merchandise endpoints to check the data present on the database, using Swagger UI or Postman.
+- Use the /importedData/items and /importedData/merchandise endpoints to check the data present on the database, using Swagger UI or Postman. (Swagger UI url is http://localhost:8080/swagger-ui.html).
 - You can check the logfiles for detailed import results.
